@@ -162,6 +162,9 @@ class DDPG(RLAlgorithm):
                 logger.log("Training started")
                 train_qf_itr, train_policy_itr = 0, 0
 
+                #sample a policy function from the posterior at every episode
+                #move in the entire episode with the sampled policy function?
+
 
                 for epoch_itr in pyprind.prog_bar(range(self.epoch_length)):
                     # Execute policy
@@ -183,6 +186,9 @@ class DDPG(RLAlgorithm):
                     """
                     Posterior distribution over policy networks 
                     We need a posterior distribution over the policy functions
+
+                    These actions are from the sampled policy function
+                    - more coherent actions during the episode
                     """
                     action = self.es.get_action(itr, observation, policy=sample_policy)  # qf=qf)
 
