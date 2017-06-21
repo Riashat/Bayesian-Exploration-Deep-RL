@@ -57,7 +57,7 @@ class MCDropout(ExplorationStrategy, Serializable):
 
         #applying MC Dropout and taking the mean action?
         action, _ = policy.get_action(observation)
-        mc_dropout = 100
+        mc_dropout = 10
         all_actions = np.zeros(shape=(mc_dropout, action.shape[0]))
 
         for d in range(mc_dropout):

@@ -191,7 +191,8 @@ class DDPG(RLAlgorithm):
                     - more coherent actions during the episode
                     """
                     action = self.es.get_action(itr, observation, policy=sample_policy)  # qf=qf)
-
+                    
+                    print ("Actions", action)
 
                     next_observation, reward, terminal, _ = self.env.step(action)
                     path_length += 1

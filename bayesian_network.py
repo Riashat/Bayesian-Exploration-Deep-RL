@@ -8,7 +8,7 @@ from sandbox.rocky.tf.core.layers_powered import LayersPowered
 
 
 class MLP(LayersPowered, Serializable):
-    def __init__(self, name, output_dim, hidden_sizes, hidden_nonlinearity,
+    def __init__(self, name, output_dim, hidden_sizes, hidden_nonlinearity, dropout_prob,
                  output_nonlinearity, hidden_W_init=L.XavierUniformInitializer(), hidden_b_init=tf.zeros_initializer(),
                  output_W_init=L.XavierUniformInitializer(), output_b_init=tf.zeros_initializer(),
                  input_var=None, input_layer=None, input_shape=None, batch_normalization=False, weight_normalization=False,
@@ -21,8 +21,14 @@ class MLP(LayersPowered, Serializable):
                 l_in = L.InputLayer(shape=(None,) + input_shape, input_var=input_var, name="input")
             else:
                 l_in = input_layer
-            self._layers = [l_in]
-            l_hid = l_in
+            self._layers = [l_in] 
+
+            ##applying dropout on all layers?
+            l_hid_dropout_input = L.DropoutLayer(l_in, p = dropout_prob)
+            l_hid = l_hid_dropout_input
+
+
+            # l_hid = l_in
             if batch_normalization:
                 l_hid = L.batch_norm(l_hid)
             for idx, hidden_size in enumerate(hidden_sizes):
@@ -41,7 +47,7 @@ class MLP(LayersPowered, Serializable):
 
 
             ###applying dropout to the last hidden layer?
-            l_hid_dropout = L.DropoutLayer(l_hid, p=0.2)
+            l_hid_dropout = L.DropoutLayer(l_hid, p=dropout_prob)
 
             l_out = L.DenseLayer(
                 l_hid_dropout,
@@ -63,6 +69,8 @@ class MLP(LayersPowered, Serializable):
             #     b=output_b_init,
             #     weight_normalization=weight_normalization
             # )
+
+
             if batch_normalization:
                 l_out = L.batch_norm(l_out)
             self._layers.append(l_out)
