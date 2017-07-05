@@ -98,6 +98,8 @@ class DDPG(RLAlgorithm):
             )
         self.qf_learning_rate = qf_learning_rate
         self.policy_weight_decay = policy_weight_decay
+
+
         self.policy_update_method = \
             FirstOrderOptimizer(
                 update_method=policy_update_method,
@@ -266,11 +268,13 @@ class DDPG(RLAlgorithm):
                                    sum([tf.reduce_sum(tf.square(param))
                                         for param in self.policy.get_params(regularizable=True)])
 
-                                   
+
         policy_qval = self.qf.get_qval_sym(
             obs, self.policy.get_action_sym(obs),
             deterministic=True
         )
+
+
         policy_surr = -tf.reduce_mean(policy_qval)
 
         policy_reg_surr = policy_surr + policy_weight_decay_term
@@ -319,23 +323,70 @@ class DDPG(RLAlgorithm):
 
 
         """
+        Uncertainty in Critic Networks for exploration
+        - Thompson Sampling with the critic target networks
+        """
+
+
+
+        """
+        Possible way (a) : for targets, take mean(Q) + lambda * variance(Q) over all Q evaluations
+        """
+
+        """
         Apply MCDropout here - get the mean of Q and the variance over Q
         """
-        mc_dropout = 100
+        # mc_dropout = 100
+        # all_posterior_qvals = np.zeros(shape=(next_obs.shape[0], mc_dropout))
+        # for d in range(mc_dropout):
+        #     posterior_qvals = target_qf.get_qval_dropout(next_obs, next_actions)
+        #     all_posterior_qvals[:, d] = posterior_qvals[:, 0]
+
+        # ## mean of the Q function posterior
+        # # mean_next_qvals = np.array([np.mean(all_posterior_qvals, axis=1)]).T
+
+        # mean_next_qvals = np.mean(all_posterior_qvals, axis=1)
+        # variance_next_qvals = np.std(all_posterior_qvals, axis=1)
+
+        # #### lambda parameter to tune between optimistic/pessimistic exploration
+        # lambda_expl = 0.5
+        # qval_bayesian = mean_next_qvals + lambda_expl * variance_next_qvals 
+
+        # ys = rewards + (1. - terminals) * self.discount * qval_bayesian.reshape(-1)
+
+
+        """
+        Possible way (b) : for targets, use max(Q) 
+        - take the max (Q_0, Q_1, Q_2, ... Q_k) from the MC Dropout Q networks
+        """
+
+        mc_dropout  = 100
         all_posterior_qvals = np.zeros(shape=(next_obs.shape[0], mc_dropout))
         for d in range(mc_dropout):
             posterior_qvals = target_qf.get_qval_dropout(next_obs, next_actions)
+
             all_posterior_qvals[:, d] = posterior_qvals[:, 0]
 
-        ## mean of the Q function posterior
-        mean_next_qvals = np.array([np.mean(all_posterior_qvals, axis=1)]).T
+
+        sum_all_posterior_qvals = np.sum(all_posterior_qvals, axis=0)
+        max_Q_ind = np.argmax(sum_all_posterior_qvals)
+
+        max_Q = all_posterior_qvals[:, max_Q_ind]
         variance_next_qvals = np.std(all_posterior_qvals, axis=1)
 
-        ys = rewards + (1. - terminals) * self.discount * mean_next_qvals.reshape(-1)
+        lambda_expl = 0.5
+        qval_bayesian = max_Q + lambda_expl * variance_next_qvals
+
+        ys = rewards + (1. - terminals) * self.discount * qval_bayesian.reshape(-1)
+
+
+        # ys = rewards + (1. - terminals) * self.discount * next_qvals.reshape(-1)
 
 
         f_train_qf = self.opt_info["f_train_qf"]
+
         qf_loss, qval, _ = f_train_qf(ys, obs, actions)
+
         target_qf.set_param_values(
             target_qf.get_param_values() * (1.0 - self.soft_target_tau) +
             self.qf.get_param_values() * self.soft_target_tau)
@@ -348,6 +399,7 @@ class DDPG(RLAlgorithm):
 
 
         while self.train_policy_itr > 0:
+
             f_train_policy = self.opt_info["f_train_policy"]
             policy_surr, _ = f_train_policy(obs)
 
@@ -359,6 +411,10 @@ class DDPG(RLAlgorithm):
             self.train_policy_itr -= 1
             train_policy_itr += 1
         return 1, train_policy_itr # number of itrs qf, policy are trained
+
+
+
+
 
 
     def evaluate(self, epoch, pool):

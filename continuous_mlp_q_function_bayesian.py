@@ -91,9 +91,7 @@ class ContinuousMLPQFunction(QFunction, LayersPowered, Serializable):
 
 
     def get_qval_sym(self, obs_var, action_var, **kwargs):
-        qvals = L.get_output(
-            self._output_layer,
-            {self._obs_layer: obs_var, self._action_layer: action_var},
-            **kwargs
-        )
+        
+        qvals = L.get_output(self._output_layer, {self._obs_layer: obs_var, self._action_layer: action_var}, **kwargs)
+        
         return tf.reshape(qvals, (-1,))
