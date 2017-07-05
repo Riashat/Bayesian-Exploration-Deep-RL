@@ -21,7 +21,8 @@ class ContinuousMLPQFunction(QFunction, LayersPowered, Serializable):
             hidden_nonlinearity=tf.nn.relu,
             action_merge_layer=-2,
             output_nonlinearity=None,
-            bn=False):
+            bn=False,
+            dropout=0.1):
         Serializable.quick_init(self, locals())
 
         l_obs = L.InputLayer(shape=(None, env_spec.observation_space.flat_dim), name="obs")
@@ -51,6 +52,10 @@ class ContinuousMLPQFunction(QFunction, LayersPowered, Serializable):
                 name="h%d" % (idx + 1)
             )
 
+            l_hidden = L.DropoutLayer(l_hidden, dropout)
+
+
+
         if action_merge_layer == n_layers:
             l_hidden = L.ConcatLayer([l_hidden, l_action])
 
@@ -61,9 +66,15 @@ class ContinuousMLPQFunction(QFunction, LayersPowered, Serializable):
             name="output"
         )
 
+    
         output_var = L.get_output(l_output, deterministic=True)
+        output_var_drop = L.get_output(l_output, deterministic=False)
+
+        #get stochastic outputs here - in case of MCDropout
+        # output_var = L.get_output(l_output, deterministic=False)
 
         self._f_qval = tensor_utils.compile_function([l_obs.input_var, l_action.input_var], output_var)
+        self._f_qval_drop = tensor_utils.compile_function([l_obs.input_var, l_action.input_var], output_var_drop)
         self._output_layer = l_output
         self._obs_layer = l_obs
         self._action_layer = l_action
@@ -73,6 +84,11 @@ class ContinuousMLPQFunction(QFunction, LayersPowered, Serializable):
 
     def get_qval(self, observations, actions):
         return self._f_qval(observations, actions)
+
+
+    def get_qval_dropout(self, observations, actions):
+        return self._f_qval_drop(observations, actions)
+
 
     def get_qval_sym(self, obs_var, action_var, **kwargs):
         qvals = L.get_output(

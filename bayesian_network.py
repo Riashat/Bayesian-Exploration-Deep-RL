@@ -47,21 +47,10 @@ class MLP(LayersPowered, Serializable):
 
 
             ###applying dropout to the last hidden layer?
-            l_hid_dropout = L.DropoutLayer(l_hid, p=dropout_prob)
-
-            l_out = L.DenseLayer(
-                l_hid_dropout,
-                num_units=output_dim,
-                nonlinearity=output_nonlinearity,
-                name="output",
-                W=output_W_init,
-                b=output_b_init,
-                weight_normalization=weight_normalization
-            )
-
+            # l_hid_dropout = L.DropoutLayer(l_hid, p=dropout_prob)
 
             # l_out = L.DenseLayer(
-            #     l_hid,
+            #     l_hid_dropout,
             #     num_units=output_dim,
             #     nonlinearity=output_nonlinearity,
             #     name="output",
@@ -70,9 +59,23 @@ class MLP(LayersPowered, Serializable):
             #     weight_normalization=weight_normalization
             # )
 
+            l_out = L.DenseLayer(
+                l_hid,
+                num_units=output_dim,
+                nonlinearity=output_nonlinearity,
+                name="output",
+                W=output_W_init,
+                b=output_b_init,
+                weight_normalization=weight_normalization
+            )
+
+            #Alternative, making output layer the dropout layer
+            # l_out = L.DropoutLayer(l_hid, p=dropout_prob)
 
             if batch_normalization:
                 l_out = L.batch_norm(l_out)
+
+
             self._layers.append(l_out)
             self._l_in = l_in
             self._l_out = l_out

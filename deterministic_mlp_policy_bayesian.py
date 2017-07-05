@@ -68,15 +68,12 @@ class DeterministicMLPPolicy(Policy, LayersPowered, Serializable):
         
     @overrides
     def get_action(self, observation):
-
         flat_obs = self.observation_space.flatten(observation)
         action = self._f_prob([flat_obs])[0]
-
         return action, dict()
 
     @overrides
     def get_actions(self, observations):
-
         flat_obs = self.observation_space.flatten_n(observations)
         actions = self._f_prob(flat_obs)
         return actions, dict()

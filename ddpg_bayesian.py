@@ -165,7 +165,6 @@ class DDPG(RLAlgorithm):
                 #sample a policy function from the posterior at every episode
                 #move in the entire episode with the sampled policy function?
 
-
                 for epoch_itr in pyprind.prog_bar(range(self.epoch_length)):
                     # Execute policy
                     if terminal:  # or path_length > self.max_path_length:
@@ -182,21 +181,13 @@ class DDPG(RLAlgorithm):
                     else:
                         initial = False
                         
-
-                    """
-                    Posterior distribution over policy networks 
-                    We need a posterior distribution over the policy functions
-
-                    These actions are from the sampled policy function
-                    - more coherent actions during the episode
-                    """
                     action = self.es.get_action(itr, observation, policy=sample_policy)  # qf=qf)
-                    
-                    print ("Actions", action)
 
+                                        
                     next_observation, reward, terminal, _ = self.env.step(action)
                     path_length += 1
                     path_return += reward
+
 
                     if not terminal and path_length >= self.max_path_length:
                         terminal = True
@@ -216,8 +207,6 @@ class DDPG(RLAlgorithm):
                             train_qf_itr += itrs[0]
                             train_policy_itr += itrs[1]
                         sample_policy.set_param_values(self.policy.get_param_values())
-
-                        
 
                     itr += 1
 
@@ -276,6 +265,8 @@ class DDPG(RLAlgorithm):
         policy_weight_decay_term = 0.5 * self.policy_weight_decay * \
                                    sum([tf.reduce_sum(tf.square(param))
                                         for param in self.policy.get_params(regularizable=True)])
+
+                                   
         policy_qval = self.qf.get_qval_sym(
             obs, self.policy.get_action_sym(obs),
             deterministic=True
@@ -289,6 +280,8 @@ class DDPG(RLAlgorithm):
 
         self.qf_update_method.update_opt(
             loss=qf_reg_loss, target=self.qf, inputs=qf_input_list)
+
+
         self.policy_update_method.update_opt(
             loss=policy_reg_surr, target=self.policy, inputs=policy_input_list)
 
@@ -321,14 +314,24 @@ class DDPG(RLAlgorithm):
         target_qf = self.opt_info["target_qf"]
         target_policy = self.opt_info["target_policy"]
 
-
-
         next_actions, _ = target_policy.get_actions(next_obs)
-
-
         next_qvals = target_qf.get_qval(next_obs, next_actions)
 
-        ys = rewards + (1. - terminals) * self.discount * next_qvals.reshape(-1)
+
+        """
+        Apply MCDropout here - get the mean of Q and the variance over Q
+        """
+        mc_dropout = 100
+        all_posterior_qvals = np.zeros(shape=(next_obs.shape[0], mc_dropout))
+        for d in range(mc_dropout):
+            posterior_qvals = target_qf.get_qval_dropout(next_obs, next_actions)
+            all_posterior_qvals[:, d] = posterior_qvals[:, 0]
+
+        ## mean of the Q function posterior
+        mean_next_qvals = np.array([np.mean(all_posterior_qvals, axis=1)]).T
+        variance_next_qvals = np.std(all_posterior_qvals, axis=1)
+
+        ys = rewards + (1. - terminals) * self.discount * mean_next_qvals.reshape(-1)
 
 
         f_train_qf = self.opt_info["f_train_qf"]
@@ -342,9 +345,13 @@ class DDPG(RLAlgorithm):
 
         self.train_policy_itr += self.policy_updates_ratio
         train_policy_itr = 0
+
+
         while self.train_policy_itr > 0:
             f_train_policy = self.opt_info["f_train_policy"]
             policy_surr, _ = f_train_policy(obs)
+
+
             target_policy.set_param_values(
                 target_policy.get_param_values() * (1.0 - self.soft_target_tau) +
                 self.policy.get_param_values() * self.soft_target_tau)
@@ -352,6 +359,7 @@ class DDPG(RLAlgorithm):
             self.train_policy_itr -= 1
             train_policy_itr += 1
         return 1, train_policy_itr # number of itrs qf, policy are trained
+
 
     def evaluate(self, epoch, pool):
         logger.log("Collecting samples for evaluation")
