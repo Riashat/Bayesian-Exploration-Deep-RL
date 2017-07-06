@@ -1,4 +1,5 @@
-from ddpg_TF_Implementation.Bayesian_Exploration_Actor_Critic.ddpg_bayesian import DDPG
+from ddpg_TF_Implementation.Bayesian_Exploration_Actor_Critic.ddpg_bayesian_thompson import DDPG as DDPG_Thompson
+from ddpg_TF_Implementation.Bayesian_Exploration_Actor_Critic.ddpg_bayesian_mean import DDPG as DDPG_Mean
 from ddpg_TF_Implementation.Bayesian_Exploration_Actor_Critic.dropout_exploration import MCDropout
 from ddpg_TF_Implementation.Bayesian_Exploration_Actor_Critic.deterministic_mlp_policy_bayesian import DeterministicMLPPolicy
 from ddpg_TF_Implementation.Bayesian_Exploration_Actor_Critic.continuous_mlp_q_function_bayesian import ContinuousMLPQFunction
@@ -53,7 +54,7 @@ qf = ContinuousMLPQFunction(env_spec=env.spec,
                             hidden_nonlinearity=tf.nn.relu,)
 
 
-ddpg_type_map = {"regular" : DDPG}
+ddpg_type_map = {"Thompson" : DDPG_Thompson, "Mean" : DDPG_Mean}
 
 
 ddpg_class = ddpg_type_map[args.type]

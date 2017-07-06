@@ -67,29 +67,22 @@ class MCDropout(ExplorationStrategy, Serializable):
     #     return mean_action
 
 
+    # def get_stochastic_action(self, t, observation, policy, **kwargs):
+    #     action, _ = policy.get_action(observation)
+    #     mc_dropout = 10
+    #     all_actions = np.zeros(shape=(mc_dropout, action.shape[0]))
+
+    #     for d in range(mc_dropout):
+    #         action, _ = policy.get_action(observation)
+    #         all_actions[d, :] = action
+
+    #     mean_action = np.mean(all_actions, axis=0)
 
 
+    #     return mean_action
 
 
-    def get_stochastic_action(self, t, observation, policy, **kwargs):
-        action, _ = policy.get_action(observation)
-        mc_dropout = 10
-        all_actions = np.zeros(shape=(mc_dropout, action.shape[0]))
-
-
-        for d in range(mc_dropout):
-            action, _ = policy.get_action(observation)
-            all_actions[d, :] = action
-
-        mean_action = np.mean(all_actions, axis=0)
-
-
-        return mean_action
-
-
-        
-
-
+    
 if __name__ == "__main__":
     ou = MCDropout(env_spec=AttrDict(action_space=Box(low=-1, high=1, shape=(1,))), mu=0, theta=0.15, sigma=0.3)
     states = []
