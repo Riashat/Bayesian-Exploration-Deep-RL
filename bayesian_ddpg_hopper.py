@@ -1,9 +1,9 @@
-from ddpg_TF_Implementation.Bayesian_Exploration_Actor_Critic.ddpg_bayesian_thompson import DDPG as DDPG_Thompson
-from ddpg_TF_Implementation.Bayesian_Exploration_Actor_Critic.ddpg_bayesian_mean import DDPG as DDPG_Mean
-from ddpg_TF_Implementation.Bayesian_Exploration_Actor_Critic.dropout_exploration import MCDropout
-from ddpg_TF_Implementation.Bayesian_Exploration_Actor_Critic.deterministic_mlp_policy_bayesian import DeterministicMLPPolicy
-from ddpg_TF_Implementation.Bayesian_Exploration_Actor_Critic.continuous_mlp_q_function_bayesian import ContinuousMLPQFunction
-
+from ddpg_bayesian_thompson import DDPG as DDPG_Thompson
+from ddpg_bayesian_mean import DDPG as DDPG_Mean
+from ddpg_bayesian import DDPG as DDPG_Bayesian
+from dropout_exploration import MCDropout
+from deterministic_mlp_policy_bayesian import DeterministicMLPPolicy
+from continuous_mlp_q_function_bayesian import ContinuousMLPQFunction
 from rllab.envs.box2d.cartpole_env import CartpoleEnv
 from rllab.envs.normalized_env import normalize
 from rllab.misc.instrument import stub, run_experiment_lite
@@ -13,7 +13,6 @@ from rllab.misc import ext
 import pickle
 import tensorflow as tf
 import argparse
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument("type", help="Type of DDPG to run: unified, unified-gated, regular")
@@ -54,11 +53,9 @@ qf = ContinuousMLPQFunction(env_spec=env.spec,
                             hidden_nonlinearity=tf.nn.relu,)
 
 
-ddpg_type_map = {"Thompson" : DDPG_Thompson, "Mean" : DDPG_Mean}
-
+ddpg_type_map = {"Thompson" : DDPG_Thompson, "Mean" : DDPG_Mean, "Bayesian" : DDPG_Bayesian}
 
 ddpg_class = ddpg_type_map[args.type]
-
 
 ## loops:
 num_experiments = 1

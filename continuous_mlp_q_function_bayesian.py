@@ -1,16 +1,16 @@
 from sandbox.rocky.tf.q_functions.base import QFunction
 from rllab.core.serializable import Serializable
 from rllab.misc import ext
-
 from sandbox.rocky.tf.core.layers_powered import LayersPowered
 from sandbox.rocky.tf.core.network import MLP
 from sandbox.rocky.tf.core.layers import batch_norm
 from sandbox.rocky.tf.distributions.categorical import Categorical
 from sandbox.rocky.tf.policies.base import StochasticPolicy
 from sandbox.rocky.tf.misc import tensor_utils
-
 import tensorflow as tf
 import sandbox.rocky.tf.core.layers as L
+
+import numpy as np
 
 
 class ContinuousMLPQFunction(QFunction, LayersPowered, Serializable):
@@ -65,16 +65,14 @@ class ContinuousMLPQFunction(QFunction, LayersPowered, Serializable):
             nonlinearity=output_nonlinearity,
             name="output"
         )
-
     
         output_var = L.get_output(l_output, deterministic=True)
         output_var_drop = L.get_output(l_output, deterministic=False)
 
-        #get stochastic outputs here - in case of MCDropout
-        # output_var = L.get_output(l_output, deterministic=False)
-
         self._f_qval = tensor_utils.compile_function([l_obs.input_var, l_action.input_var], output_var)
         self._f_qval_drop = tensor_utils.compile_function([l_obs.input_var, l_action.input_var], output_var_drop)
+
+
         self._output_layer = l_output
         self._obs_layer = l_obs
         self._action_layer = l_action
@@ -91,7 +89,31 @@ class ContinuousMLPQFunction(QFunction, LayersPowered, Serializable):
 
 
     def get_qval_sym(self, obs_var, action_var, **kwargs):
-        
         qvals = L.get_output(self._output_layer, {self._obs_layer: obs_var, self._action_layer: action_var}, **kwargs)
+        return tf.reshape(qvals, (-1,))
+
+
+    """
+    want this to return mean qvals + lamba * variance as the output
+    """
+    def get_qval_plus_var_sym(self, obs_var, action_var, **kwargs):
+
+        """
+        TO DO HERE
+        """
+
+        mc_dropout = 5
+        all_qvals = []
+        for m in range(mc_dropout):
+            qvals = L.get_output(self._output_layer, {self._obs_layer: obs_var, self._action_layer: action_var}, **kwargs)
+            all_qvals = np.append(all_qvals, qvals)
         
         return tf.reshape(qvals, (-1,))
+
+
+
+
+
+
+
+
