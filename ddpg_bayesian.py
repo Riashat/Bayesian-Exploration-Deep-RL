@@ -228,6 +228,8 @@ class DDPG(RLAlgorithm):
             self.env.terminate()
             self.policy.terminate()
 
+
+
     def init_opt(self):
 
         # First, create "target" policy and Q functions
@@ -268,9 +270,13 @@ class DDPG(RLAlgorithm):
                                    sum([tf.reduce_sum(tf.square(param))
                                         for param in self.policy.get_params(regularizable=True)])
 
-        # import pdb; pdb.set_trace()
-        # policy_qval = self.qf.get_qval_sym(obs, self.policy.get_action_sym(obs), deterministic=True)
 
+        """
+        Commenting these out below
+        """
+        # import pdb; pdb.set_trace()
+        policy_qval = self.qf.get_qval_sym(obs, self.policy.get_action_sym(obs), deterministic=True)
+        # policy_surr = -tf.reduce_mean(policy_qval)
 
         #############################
 
@@ -282,17 +288,33 @@ class DDPG(RLAlgorithm):
         # get_qval_plus_var_sym(state, policy, lambda)
 
         # policy_qval_plus_var = self.qf.get_qval_plus_var_sym(obs, self.policy.get_action_sym(obs), lambda, deterministic=True)
-        policy_qval = self.qf.get_qval_plus_var_sym(obs, self.policy.get_action_sym(obs), deterministic=False)
+        # policy_qval = self.qf.get_qval_plus_var_sym(obs, self.policy.get_action_sym(obs), deterministic=False)
+
+        ############################
+
+
+        #############################
+
+        """
+        CHANGES HERE
+        """
+
+        policy_surr = -tf.reduce_mean(policy_qval)
+        policy_input_list = [obs, qval]
 
 
         ############################
 
-        policy_surr = -tf.reduce_mean(policy_qval)
+
 
         policy_reg_surr = policy_surr + policy_weight_decay_term
 
         qf_input_list = [yvar, obs, action]
-        policy_input_list = [obs]
+
+        """
+        Commented out
+        """
+        # policy_input_list = [obs]
 
         self.qf_update_method.update_opt(
             loss=qf_reg_loss, target=self.qf, inputs=qf_input_list)
@@ -356,7 +378,27 @@ class DDPG(RLAlgorithm):
             ### for actor update step
             f_train_policy = self.opt_info["f_train_policy"]
 
-            policy_surr, _ = f_train_policy(obs)
+
+            MC_SAMPLES =20
+            all_qval = np.zeros(shape=(obs.shape[0], MC_SAMPLES))
+            for m in range(MC_SAMPLES):
+
+                _, qval, _ = f_train_qf(ys, obs, actions)
+                all_qval[:, m] = qval
+
+            mean_qval = np.mean(all_qval, axis=1)
+            var_qval = np.var(all_qval, axis=1)
+
+            print ("Variance over Q network", var_qval)
+
+            qval_uncertain = mean_qval + var_qval
+
+            #policy_surr, _ = f_train_policy(obs)
+            policy_surr, _ = f_train_policy(obs, qval_uncertain)
+
+
+
+
             target_policy.set_param_values(
                 target_policy.get_param_values() * (1.0 - self.soft_target_tau) +
                 self.policy.get_param_values() * self.soft_target_tau)
@@ -364,6 +406,10 @@ class DDPG(RLAlgorithm):
             self.train_policy_itr -= 1
             train_policy_itr += 1
         return 1, train_policy_itr # number of itrs qf, policy are trained
+
+
+
+
 
 
 
