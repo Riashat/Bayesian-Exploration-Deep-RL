@@ -130,6 +130,7 @@ for step in range(TRAIN_STEPS):
     	# All_MC_Predicted_Classes[:, m] = tf.argmax(predicted_y, 1)
 
 	Mean_Predicted_Classes = np.mean(All_MC_Predicted_Classes, axis=1)
+    	Variance_Predicted_Classes = np.var(All_MC_Predicted_Classes, axis=1)
 	# Mean_Predicted_Classes = tf.reduce_mean(All_MC_Predicted_Classes, axis=1) 	
 	# Mean_Predicted_Classes = Mean_Predicted_Classes.tolist()
 
