@@ -305,8 +305,6 @@ class DDPG(RLAlgorithm):
 
         ############################
 
-
-
         policy_reg_surr = policy_surr + policy_weight_decay_term
 
         qf_input_list = [yvar, obs, action]
@@ -379,7 +377,7 @@ class DDPG(RLAlgorithm):
             f_train_policy = self.opt_info["f_train_policy"]
 
 
-            MC_SAMPLES =20
+            MC_SAMPLES=20
             all_qval = np.zeros(shape=(obs.shape[0], MC_SAMPLES))
             for m in range(MC_SAMPLES):
 
@@ -389,15 +387,10 @@ class DDPG(RLAlgorithm):
             mean_qval = np.mean(all_qval, axis=1)
             var_qval = np.var(all_qval, axis=1)
 
-            print ("Variance over Q network", var_qval)
-
             qval_uncertain = mean_qval + var_qval
 
             #policy_surr, _ = f_train_policy(obs)
             policy_surr, _ = f_train_policy(obs, qval_uncertain)
-
-
-
 
             target_policy.set_param_values(
                 target_policy.get_param_values() * (1.0 - self.soft_target_tau) +

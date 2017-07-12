@@ -1,0 +1,140 @@
+2017-07-12 09:22:32.919231 EDT | [Trial_Bayesian_Exploration/] observation space: Box(11,)
+2017-07-12 09:22:32.919512 EDT | [Trial_Bayesian_Exploration/] action space: Box(3,)
+2017-07-12 09:22:33.415071 EDT | [Trial_Bayesian_Exploration/] Populating workers...
+2017-07-12 09:22:33.415311 EDT | [Trial_Bayesian_Exploration/] Populated
+2017-07-12 09:22:35.323080 EDT | [Trial_Bayesian_Exploration/] epoch #0 | Training started
+2017-07-12 09:22:36.167981 EDT | [Trial_Bayesian_Exploration/] epoch #0 | Training finished
+2017-07-12 09:22:36.168245 EDT | [Trial_Bayesian_Exploration/] epoch #0 | Trained qf 0 steps, policy 0 steps
+2017-07-12 09:22:36.168460 EDT | [Trial_Bayesian_Exploration/] epoch #1 | Training started
+2017-07-12 09:22:37.006537 EDT | [Trial_Bayesian_Exploration/] epoch #1 | Training finished
+2017-07-12 09:22:37.006788 EDT | [Trial_Bayesian_Exploration/] epoch #1 | Trained qf 0 steps, policy 0 steps
+2017-07-12 09:22:37.006989 EDT | [Trial_Bayesian_Exploration/] epoch #2 | Training started
+2017-07-12 09:22:37.828863 EDT | [Trial_Bayesian_Exploration/] epoch #2 | Training finished
+2017-07-12 09:22:37.829077 EDT | [Trial_Bayesian_Exploration/] epoch #2 | Trained qf 0 steps, policy 0 steps
+2017-07-12 09:22:37.829240 EDT | [Trial_Bayesian_Exploration/] epoch #3 | Training started
+2017-07-12 09:22:38.652386 EDT | [Trial_Bayesian_Exploration/] epoch #3 | Training finished
+2017-07-12 09:22:38.652639 EDT | [Trial_Bayesian_Exploration/] epoch #3 | Trained qf 0 steps, policy 0 steps
+2017-07-12 09:22:38.652842 EDT | [Trial_Bayesian_Exploration/] epoch #4 | Training started
+2017-07-12 09:22:39.469835 EDT | [Trial_Bayesian_Exploration/] epoch #4 | Training finished
+2017-07-12 09:22:39.470033 EDT | [Trial_Bayesian_Exploration/] epoch #4 | Trained qf 0 steps, policy 0 steps
+2017-07-12 09:22:39.470186 EDT | [Trial_Bayesian_Exploration/] epoch #5 | Training started
+2017-07-12 09:22:40.297185 EDT | [Trial_Bayesian_Exploration/] epoch #5 | Training finished
+2017-07-12 09:22:40.297431 EDT | [Trial_Bayesian_Exploration/] epoch #5 | Trained qf 0 steps, policy 0 steps
+2017-07-12 09:22:40.297639 EDT | [Trial_Bayesian_Exploration/] epoch #6 | Training started
+2017-07-12 09:22:41.124994 EDT | [Trial_Bayesian_Exploration/] epoch #6 | Training finished
+2017-07-12 09:22:41.125214 EDT | [Trial_Bayesian_Exploration/] epoch #6 | Trained qf 0 steps, policy 0 steps
+2017-07-12 09:22:41.125367 EDT | [Trial_Bayesian_Exploration/] epoch #7 | Training started
+2017-07-12 09:22:41.955415 EDT | [Trial_Bayesian_Exploration/] epoch #7 | Training finished
+2017-07-12 09:22:41.955668 EDT | [Trial_Bayesian_Exploration/] epoch #7 | Trained qf 0 steps, policy 0 steps
+2017-07-12 09:22:41.955873 EDT | [Trial_Bayesian_Exploration/] epoch #8 | Training started
+2017-07-12 09:22:42.786357 EDT | [Trial_Bayesian_Exploration/] epoch #8 | Training finished
+2017-07-12 09:22:42.786557 EDT | [Trial_Bayesian_Exploration/] epoch #8 | Trained qf 0 steps, policy 0 steps
+2017-07-12 09:22:42.786709 EDT | [Trial_Bayesian_Exploration/] epoch #9 | Training started
+2017-07-12 09:22:43.779252 EDT | [Trial_Bayesian_Exploration/] epoch #9 | Training finished
+2017-07-12 09:22:43.779507 EDT | [Trial_Bayesian_Exploration/] epoch #9 | Trained qf 1 steps, policy 1 steps
+2017-07-12 09:22:43.779679 EDT | [Trial_Bayesian_Exploration/] epoch #9 | Collecting samples for evaluation
+2017-07-12 09:22:51.221690 EDT | -----------------------  ---------
+2017-07-12 09:22:51.221938 EDT | Epoch                     9
+2017-07-12 09:22:51.222175 EDT | Iteration                 9
+2017-07-12 09:22:51.222309 EDT | AverageReturn             9.1814
+2017-07-12 09:22:51.222531 EDT | StdReturn                 0.046539
+2017-07-12 09:22:51.222720 EDT | MaxReturn                 9.3185
+2017-07-12 09:22:51.222896 EDT | MinReturn                 9.07004
+2017-07-12 09:22:51.223063 EDT | AverageEsReturn           9.90701
+2017-07-12 09:22:51.223227 EDT | StdEsReturn               7.05845
+2017-07-12 09:22:51.223392 EDT | MaxEsReturn              54.8695
+2017-07-12 09:22:51.223556 EDT | MinEsReturn               1.67899
+2017-07-12 09:22:51.223720 EDT | AverageDiscountedReturn   8.76006
+2017-07-12 09:22:51.223900 EDT | AverageQLoss              0.74919
+2017-07-12 09:22:51.224063 EDT | AveragePolicySurr        -0.053608
+2017-07-12 09:22:51.224257 EDT | AverageQ                 -0.243523
+2017-07-12 09:22:51.224422 EDT | AverageAbsQ               0.365071
+2017-07-12 09:22:51.224587 EDT | AverageY                  0.48041
+2017-07-12 09:22:51.224750 EDT | AverageAbsY               0.593881
+2017-07-12 09:22:51.224914 EDT | AverageAbsQYDiff          0.75809
+2017-07-12 09:22:51.225078 EDT | AverageAction             0.218841
+2017-07-12 09:22:51.225240 EDT | PolicyRegParamNorm       11.23
+2017-07-12 09:22:51.225402 EDT | QFunRegParamNorm         11.13
+2017-07-12 09:22:51.225564 EDT | -----------------------  ---------
+2017-07-12 09:22:51.225882 EDT | [Trial_Bayesian_Exploration/] epoch #10 | Training started
+2017-07-12 09:24:18.240014 EDT | [Trial_Bayesian_Exploration/] epoch #10 | Training finished
+2017-07-12 09:24:18.240239 EDT | [Trial_Bayesian_Exploration/] epoch #10 | Trained qf 1000 steps, policy 1000 steps
+2017-07-12 09:24:18.240429 EDT | [Trial_Bayesian_Exploration/] epoch #10 | Collecting samples for evaluation
+2017-07-12 09:24:26.551050 EDT | -----------------------  ----------
+2017-07-12 09:24:26.551356 EDT | Epoch                    10
+2017-07-12 09:24:26.551567 EDT | Iteration                10
+2017-07-12 09:24:26.551764 EDT | AverageReturn             1.70342
+2017-07-12 09:24:26.552028 EDT | StdReturn                 0.0811045
+2017-07-12 09:24:26.552227 EDT | MaxReturn                 1.91245
+2017-07-12 09:24:26.552417 EDT | MinReturn                 1.49564
+2017-07-12 09:24:26.552608 EDT | AverageEsReturn           2.15915
+2017-07-12 09:24:26.552795 EDT | StdEsReturn               1.56574
+2017-07-12 09:24:26.552983 EDT | MaxEsReturn               8.61305
+2017-07-12 09:24:26.553170 EDT | MinEsReturn               0.0122472
+2017-07-12 09:24:26.553358 EDT | AverageDiscountedReturn   1.70881
+2017-07-12 09:24:26.553544 EDT | AverageQLoss              0.0712594
+2017-07-12 09:24:26.553731 EDT | AveragePolicySurr        -0.672253
+2017-07-12 09:24:26.553918 EDT | AverageQ                  0.795785
+2017-07-12 09:24:26.554105 EDT | AverageAbsQ               0.823965
+2017-07-12 09:24:26.554291 EDT | AverageY                  0.805172
+2017-07-12 09:24:26.554476 EDT | AverageAbsY               0.84508
+2017-07-12 09:24:26.554662 EDT | AverageAbsQYDiff          0.177415
+2017-07-12 09:24:26.554848 EDT | AverageAction             0.999596
+2017-07-12 09:24:26.555033 EDT | PolicyRegParamNorm       13.2281
+2017-07-12 09:24:26.555220 EDT | QFunRegParamNorm         11.3933
+2017-07-12 09:24:26.555406 EDT | -----------------------  ----------
+2017-07-12 09:24:26.555707 EDT | [Trial_Bayesian_Exploration/] epoch #11 | Training started
+2017-07-12 09:25:46.611911 EDT | [Trial_Bayesian_Exploration/] epoch #11 | Training finished
+2017-07-12 09:25:46.612170 EDT | [Trial_Bayesian_Exploration/] epoch #11 | Trained qf 1000 steps, policy 1000 steps
+2017-07-12 09:25:46.612352 EDT | [Trial_Bayesian_Exploration/] epoch #11 | Collecting samples for evaluation
+2017-07-12 09:25:54.435698 EDT | -----------------------  ----------
+2017-07-12 09:25:54.436028 EDT | Epoch                    11
+2017-07-12 09:25:54.436392 EDT | Iteration                11
+2017-07-12 09:25:54.436696 EDT | AverageReturn             3.58419
+2017-07-12 09:25:54.436997 EDT | StdReturn                 0.115737
+2017-07-12 09:25:54.437365 EDT | MaxReturn                 3.89929
+2017-07-12 09:25:54.437606 EDT | MinReturn                 3.26895
+2017-07-12 09:25:54.437795 EDT | AverageEsReturn           4.0568
+2017-07-12 09:25:54.437981 EDT | StdEsReturn               0.737778
+2017-07-12 09:25:54.438166 EDT | MaxEsReturn               6.41711
+2017-07-12 09:25:54.438353 EDT | MinEsReturn               1.23751
+2017-07-12 09:25:54.438526 EDT | AverageDiscountedReturn   3.5301
+2017-07-12 09:25:54.438680 EDT | AverageQLoss              0.0288876
+2017-07-12 09:25:54.438924 EDT | AveragePolicySurr        -0.974544
+2017-07-12 09:25:54.439177 EDT | AverageQ                  1.1393
+2017-07-12 09:25:54.439456 EDT | AverageAbsQ               1.19482
+2017-07-12 09:25:54.439660 EDT | AverageY                  1.14473
+2017-07-12 09:25:54.439862 EDT | AverageAbsY               1.20289
+2017-07-12 09:25:54.440104 EDT | AverageAbsQYDiff          0.123579
+2017-07-12 09:25:54.440304 EDT | AverageAction             1
+2017-07-12 09:25:54.440497 EDT | PolicyRegParamNorm       13.4963
+2017-07-12 09:25:54.440679 EDT | QFunRegParamNorm         11.7883
+2017-07-12 09:25:54.440858 EDT | -----------------------  ----------
+2017-07-12 09:25:54.441183 EDT | [Trial_Bayesian_Exploration/] epoch #12 | Training started
+2017-07-12 09:27:13.633224 EDT | [Trial_Bayesian_Exploration/] epoch #12 | Training finished
+2017-07-12 09:27:13.633485 EDT | [Trial_Bayesian_Exploration/] epoch #12 | Trained qf 1000 steps, policy 1000 steps
+2017-07-12 09:27:13.633668 EDT | [Trial_Bayesian_Exploration/] epoch #12 | Collecting samples for evaluation
+2017-07-12 09:27:21.520496 EDT | -----------------------  ----------
+2017-07-12 09:27:21.520771 EDT | Epoch                    12
+2017-07-12 09:27:21.521064 EDT | Iteration                12
+2017-07-12 09:27:21.521281 EDT | AverageReturn             3.58477
+2017-07-12 09:27:21.521496 EDT | StdReturn                 0.113468
+2017-07-12 09:27:21.521707 EDT | MaxReturn                 3.89855
+2017-07-12 09:27:21.521917 EDT | MinReturn                 3.29676
+2017-07-12 09:27:21.522127 EDT | AverageEsReturn           4.13938
+2017-07-12 09:27:21.522378 EDT | StdEsReturn               0.57574
+2017-07-12 09:27:21.522593 EDT | MaxEsReturn               6.29128
+2017-07-12 09:27:21.522809 EDT | MinEsReturn               2.1017
+2017-07-12 09:27:21.523011 EDT | AverageDiscountedReturn   3.53067
+2017-07-12 09:27:21.523216 EDT | AverageQLoss              0.0412518
+2017-07-12 09:27:21.523416 EDT | AveragePolicySurr        -1.35587
+2017-07-12 09:27:21.523616 EDT | AverageQ                  1.59025
+2017-07-12 09:27:21.523829 EDT | AverageAbsQ               1.66405
+2017-07-12 09:27:21.524035 EDT | AverageY                  1.59587
+2017-07-12 09:27:21.524242 EDT | AverageAbsY               1.67236
+2017-07-12 09:27:21.524449 EDT | AverageAbsQYDiff          0.144135
+2017-07-12 09:27:21.524655 EDT | AverageAction             1
+2017-07-12 09:27:21.524875 EDT | PolicyRegParamNorm       13.4963
+2017-07-12 09:27:21.525082 EDT | QFunRegParamNorm         12.3922
+2017-07-12 09:27:21.525289 EDT | -----------------------  ----------
+2017-07-12 09:27:21.525633 EDT | [Trial_Bayesian_Exploration/] epoch #13 | Training started

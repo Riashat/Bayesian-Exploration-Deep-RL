@@ -1,0 +1,130 @@
+{
+  "args_data": "gANjcmxsYWIubWlzYy5pbnN0cnVtZW50ClN0dWJNZXRob2RDYWxsCnEAKYFxAX1xAihYCAAAAF9fa3dhcmdzcQN9cQRYBgAAAF9fYXJnc3EFKGNybGxhYi5taXNjLmluc3RydW1lbnQKU3R1Yk9iamVjdApxBimBcQd9cQgoWAsAAABwcm94eV9jbGFzc3EJY2RkcGdfYmF5ZXNpYW5fdGhvbXBzb24KRERQRwpxClgGAAAAa3dhcmdzcQt9cQwoWAgAAABkaXNjb3VudHENRz/vrhR64UeuWAgAAABuX2Vwb2Noc3EOSxRYAgAAAGVzcQ9oBimBcRB9cREoaAljZHJvcG91dF9leHBsb3JhdGlvbgpNQ0Ryb3BvdXQKcRJoC31xE1gIAAAAZW52X3NwZWNxFGNybGxhYi5taXNjLmluc3RydW1lbnQKU3R1YkF0dHIKcRUpgXEWfXEXKFgKAAAAX2F0dHJfbmFtZXEYWAQAAABzcGVjcRlYBAAAAF9vYmpxGmgGKYFxG31xHChoCWNzYW5kYm94LnJvY2t5LnRmLmVudnMuYmFzZQpUZkVudgpxHWgLfXEeWAsAAAB3cmFwcGVkX2VudnEfaAYpgXEgfXEhKGgJY3JsbGFiLmVudnMubm9ybWFsaXplZF9lbnYKTm9ybWFsaXplZEVudgpxImgLfXEjWAMAAABlbnZxJGgGKYFxJX1xJihoCWNybGxhYi5lbnZzLmd5bV9lbnYKR3ltRW52CnEnaAt9cSgoWAoAAAByZWNvcmRfbG9ncSmJWAgAAABlbnZfbmFtZXEqWAkAAABIb3BwZXItdjFxK1gLAAAAZm9yY2VfcmVzZXRxLIhYDAAAAHJlY29yZF92aWRlb3EtiXVYBAAAAGFyZ3NxLil1YnNoLil1YnNoLil1YnVic2guKXViWA0AAABtaW5fcG9vbF9zaXplcS9NECdYDAAAAHNjYWxlX3Jld2FyZHEwRz/wAAAAAAAAWAoAAABiYXRjaF9zaXplcTFLQFgQAAAAcWZfbGVhcm5pbmdfcmF0ZXEyRz9QYk3S8an8WAQAAABwbG90cTOJWAIAAABxZnE0aAYpgXE1fXE2KGgJY2NvbnRpbnVvdXNfbWxwX3FfZnVuY3Rpb25fYmF5ZXNpYW4KQ29udGludW91c01MUFFGdW5jdGlvbgpxN2gLfXE4KFgMAAAAaGlkZGVuX3NpemVzcTlLZEtkhnE6aBRoFSmBcTt9cTwoaBhoGWgaaBt1YlgTAAAAaGlkZGVuX25vbmxpbmVhcml0eXE9Y3RlbnNvcmZsb3cucHl0aG9uLm9wcy5nZW5fbm5fb3BzCnJlbHUKcT51aC4pdWJYFAAAAHBvbGljeV9sZWFybmluZ19yYXRlcT9HPxo24uscQy1YBgAAAHBvbGljeXFAaAYpgXFBfXFCKGgJY2RldGVybWluaXN0aWNfbWxwX3BvbGljeV9iYXllc2lhbgpEZXRlcm1pbmlzdGljTUxQUG9saWN5CnFDaAt9cUQoWAQAAABuYW1lcUVoQGg5S2RLMksZh3FGaBRoFSmBcUd9cUgoaBhoGWgaaBt1Ymg9aD51aC4pdWJYDAAAAGVwb2NoX2xlbmd0aHFJTegDWA8AAABtYXhfcGF0aF9sZW5ndGhxSmgVKYFxS31xTChoGFgHAAAAaG9yaXpvbnFNaBpoG3ViaCRoG3VoLil1YlgFAAAAdHJhaW5xTil9cU90cVB1Yi4=",
+  "exp_name": "Trial_Bayesian_Exploration/",
+  "json_args": {
+    "algo": {
+      "_name": "ddpg_bayesian_thompson.DDPG",
+      "batch_size": 64,
+      "discount": 0.99,
+      "epoch_length": 1000,
+      "es": {
+        "_name": "dropout_exploration.MCDropout",
+        "env_spec": {
+          "attr": "spec",
+          "obj": {
+            "_name": "sandbox.rocky.tf.envs.base.TfEnv",
+            "wrapped_env": {
+              "_name": "rllab.envs.normalized_env.NormalizedEnv",
+              "env": {
+                "_name": "rllab.envs.gym_env.GymEnv",
+                "env_name": "Hopper-v1",
+                "force_reset": true,
+                "record_log": false,
+                "record_video": false
+              }
+            }
+          }
+        }
+      },
+      "max_path_length": {
+        "attr": "horizon",
+        "obj": {
+          "_name": "sandbox.rocky.tf.envs.base.TfEnv",
+          "wrapped_env": {
+            "_name": "rllab.envs.normalized_env.NormalizedEnv",
+            "env": {
+              "_name": "rllab.envs.gym_env.GymEnv",
+              "env_name": "Hopper-v1",
+              "force_reset": true,
+              "record_log": false,
+              "record_video": false
+            }
+          }
+        }
+      },
+      "min_pool_size": 10000,
+      "n_epochs": 20,
+      "plot": false,
+      "policy_learning_rate": 0.0001,
+      "qf": {
+        "_name": "continuous_mlp_q_function_bayesian.ContinuousMLPQFunction",
+        "env_spec": {
+          "attr": "spec",
+          "obj": {
+            "_name": "sandbox.rocky.tf.envs.base.TfEnv",
+            "wrapped_env": {
+              "_name": "rllab.envs.normalized_env.NormalizedEnv",
+              "env": {
+                "_name": "rllab.envs.gym_env.GymEnv",
+                "env_name": "Hopper-v1",
+                "force_reset": true,
+                "record_log": false,
+                "record_video": false
+              }
+            }
+          }
+        },
+        "hidden_nonlinearity": "tensorflow.python.ops.gen_nn_ops.relu",
+        "hidden_sizes": [
+          100,
+          100
+        ]
+      },
+      "qf_learning_rate": 0.001,
+      "scale_reward": 1.0
+    },
+    "env": {
+      "_name": "sandbox.rocky.tf.envs.base.TfEnv",
+      "wrapped_env": {
+        "_name": "rllab.envs.normalized_env.NormalizedEnv",
+        "env": {
+          "_name": "rllab.envs.gym_env.GymEnv",
+          "env_name": "Hopper-v1",
+          "force_reset": true,
+          "record_log": false,
+          "record_video": false
+        }
+      }
+    },
+    "policy": {
+      "_name": "deterministic_mlp_policy_bayesian.DeterministicMLPPolicy",
+      "env_spec": {
+        "attr": "spec",
+        "obj": {
+          "_name": "sandbox.rocky.tf.envs.base.TfEnv",
+          "wrapped_env": {
+            "_name": "rllab.envs.normalized_env.NormalizedEnv",
+            "env": {
+              "_name": "rllab.envs.gym_env.GymEnv",
+              "env_name": "Hopper-v1",
+              "force_reset": true,
+              "record_log": false,
+              "record_video": false
+            }
+          }
+        }
+      },
+      "hidden_nonlinearity": "tensorflow.python.ops.gen_nn_ops.relu",
+      "hidden_sizes": [
+        100,
+        50,
+        25
+      ],
+      "name": "policy"
+    }
+  },
+  "log_dir": "./bayesian_ddpg/",
+  "log_tabular_only": false,
+  "n_parallel": 1,
+  "params_log_file": "params.json",
+  "plot": false,
+  "resume_from": null,
+  "seed": 1,
+  "snapshot_gap": 1,
+  "snapshot_mode": "last",
+  "tabular_log_file": "progress.csv",
+  "text_log_file": "debug.log",
+  "use_cloudpickle": false,
+  "variant_data": null,
+  "variant_log_file": "variant.json"
+}

@@ -205,7 +205,7 @@ class DDPG(RLAlgorithm):
                         for update_itr in range(self.n_updates_per_sample):
                             # Train policy
                             batch = pool.random_batch(self.batch_size)
-                            itrs = self.do_training(itr, batch)
+                            itrs = self.do_training(itr, epoch, batch)
                             train_qf_itr += itrs[0]
                             train_policy_itr += itrs[1]
                         sample_policy.set_param_values(self.policy.get_param_values())
@@ -306,7 +306,7 @@ class DDPG(RLAlgorithm):
             target_policy=target_policy,
         )
 
-    def do_training(self, itr, batch):
+    def do_training(self, itr, epoch, batch):
 
         obs, actions, rewards, next_obs, terminals = ext.extract(
             batch,
@@ -334,7 +334,7 @@ class DDPG(RLAlgorithm):
         """
         Apply MCDropout here - get the mean of Q and the variance over Q
         """
-        mc_dropout = 100
+        mc_dropout = 50
         all_posterior_qvals = np.zeros(shape=(next_obs.shape[0], mc_dropout))
         for d in range(mc_dropout):
             posterior_qvals = target_qf.get_qval_dropout(next_obs, next_actions)
@@ -345,8 +345,9 @@ class DDPG(RLAlgorithm):
         mean_next_qvals = np.mean(all_posterior_qvals, axis=1)
         variance_next_qvals = np.std(all_posterior_qvals, axis=1)
 
+
         #### lambda parameter to tune between optimistic/pessimistic exploration
-        lambda_expl = 0.5
+        lambda_expl = 10 / epoch
         qval_bayesian = mean_next_qvals + lambda_expl * variance_next_qvals 
 
         ys = rewards + (1. - terminals) * self.discount * qval_bayesian.reshape(-1)
